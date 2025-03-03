@@ -1,6 +1,7 @@
 import { Themeswitch } from "../themeSwitch/Themeswitch";
 import { Link } from "react-router-dom";
 import './Header.scss';
+import { NavigationMenu } from "./navigationmenu/Navigationmenu";
 
 export function Header() {
     return (
@@ -9,6 +10,7 @@ export function Header() {
                 <Link to={'/'} className='app-header__title' aria-label='Home - Nithya`s portfolio'>
                     App name.
                 </Link>
+                <NavigationMenu/>
                 <Themeswitch/>
             </div>
         </header>
