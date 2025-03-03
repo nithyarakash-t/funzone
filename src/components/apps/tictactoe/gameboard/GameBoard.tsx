@@ -1,9 +1,5 @@
+import { GameBoardProps } from '../types';
 import './Gameboard.scss';
-
-interface GameBoardProps {
-  onSelectSquare: (row: number, col: number) => void;
-  board: (null | 'X' | 'O')[][];
-}
 
 export function GameBoard({ onSelectSquare, board }: GameBoardProps) {
   return (

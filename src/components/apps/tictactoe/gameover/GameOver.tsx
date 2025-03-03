@@ -1,9 +1,5 @@
+import { GameOverProps } from '../types';
 import './Gameover.scss';
-
-interface GameOverProps {
-  winner?: string;
-  onRestart: () => void;
-}
 
 export function GameOver({ winner, onRestart }: GameOverProps) {
   return (

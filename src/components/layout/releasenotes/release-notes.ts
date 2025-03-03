@@ -1,9 +1,9 @@
 export const releaseNotes = [
     {
-        version: "0.0",
-        date: "01.01.2000",
+        version: "0.0.0",
+        date: "03.03.2025",
         desc: [
-            "Sample",
+            "Added tictactoe --- to be reworked at a later time",
         ]
     },
 ]

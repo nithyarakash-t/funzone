@@ -1,14 +1,5 @@
+import { LogProps } from '../types';
 import './Log.scss';
-
-interface LogProps {
-  turns: {
-    square: {
-      row: number;
-      col: number;
-    };
-    player: 'X' | 'O';
-  }[];
-}
 
 export function Log({ turns }: LogProps) {
   return (

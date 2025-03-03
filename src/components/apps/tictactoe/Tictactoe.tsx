@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Players, GameTurn, GameBoardType } from './types';
 
 import { Player } from './player/Player';
 import { GameBoard } from './gameboard/GameBoard';
@@ -6,21 +7,6 @@ import { Log } from './log/Log';
 import { GameOver } from './gameover/GameOver';
 import { WINNING_COMBINATIONS } from './winningCombinations';
 import './Tictactoe.scss';
-
-type Players = {
-  X: string;
-  O: string;
-};
-
-type GameTurn = {
-  square: {
-    row: number;
-    col: number;
-  };
-  player: 'X' | 'O';
-};
-
-type GameBoardType = (null | 'X' | 'O')[][];
 
 const PLAYERS: Players = {
   X: 'Player 1',
