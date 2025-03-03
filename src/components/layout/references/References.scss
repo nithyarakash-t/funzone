@@ -1,0 +1,26 @@
+.cc-references {
+    &__list {
+        list-style-type: upper-latin;
+        padding-inline-start: 1.5rem;
+    }
+    &__back {
+        svg {
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+    }
+    &__head {
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    &__wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}

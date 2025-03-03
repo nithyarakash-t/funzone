@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Caprasimo&family=Roboto+Slab:wght@400;700&display=swap");
+
+.ttt-game {
+  &__players {
+    button {
+      width: 3rem;
+      border: none;
+      background: none;
+      color: #c3ba78;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 0.5rem 0.25rem;
+      text-align: center;
+
+      &:hover {
+        color: #f8ca31;
+      }
+    }
+    & li {
+      display: flex;
+      align-items: center;
+      width: 50%;
+      border: 2px solid transparent;
+    }
+    & {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+    &.highlight-player {
+      li.active {
+        border-color: #f6e35a;
+        animation: pulse 2s infinite ease-in-out;
+
+        :is(.ttt-player__name, .ttt-player__symbol) {
+          color: #f6e35a;
+        }
+      }
+    }
+  }
+  &__container {
+    max-width: 45rem;
+    margin: 3rem auto;
+    padding: 2rem;
+    border-radius: 6px;
+    background: linear-gradient(#383624, #282617);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    border-color: #f6e35a;
+    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0.4);
+  }
+  50% {
+    border-color: #f8c031;
+    box-shadow: 0 0 0 0.5rem rgba(248, 165, 49, 0);
+  }
+  100% {
+    border-color: #f6e35a;
+    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0);
+  }
+}
+
+/*not being used*/
+// #pre-game {
+//   text-align: center;
+// }
+
+// #pre-game button {
+//   cursor: pointer;
+//   background: none;
+//   color: #f8c031;
+//   border: none;
+//   font-family: "Caprasimo", cursive;
+//   font-size: 4rem;
+//   text-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+//   animation: pulse-text-size 2s infinite ease-out;
+// }
+
+// #game-hints {
+//   text-align: center;
+//   color: #46432f;
+// }
+
+// #game-hints h2 {
+//   font-family: "Caprasimo", cursive;
+//   font-size: 2rem;
+//   margin: 0;
+// }
+
+// #game-hints ul {
+//   list-style: none;
+//   padding: 0;
+//   margin: 0;
+// }
+
+// #game-hints button {
+//   cursor: pointer;
+//   border: none;
+//   background: transparent;
+//   color: #23221f;
+//   font: inherit;
+//   margin-top: 1.5rem;
+// }
+
+// @keyframes pulse-text-size {
+//   0% {
+//     transform: scale(1);
+//   }
+//   50% {
+//     transform: scale(1.05);
+//   }
+//   100% {
+//     transform: scale(1);
+//   }
+// }

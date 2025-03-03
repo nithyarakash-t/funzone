@@ -9,6 +9,7 @@
         inset: 0 0 auto 0;
         z-index: 99;
         padding: 1rem 0;
+        background-color: var(--app-color-background-primary);
         height: var(--app-height-header, 4.5rem);
     }
 }

@@ -1,0 +1,7 @@
+Mini games kit
+
+-- tic tac toe
+-- boardgame-io
+-- wordle like (refreshes everyday)
+-- title takedown
+-- mewtru inspired pages
