@@ -1,0 +1,20 @@
+.app-header {
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__wrap {
+        position: sticky;
+        background-color: transparent;
+        inset: 0 0 auto 0;
+        z-index: 99;
+        padding: 1rem 0;
+        height: var(--app-height-header, 4.5rem);
+    }
+}
+
+:root {
+    --app-height-header: 4rem;
+    --app-margin-top-header: 0;
+    --app-wrap-padding-v: calc(var(--app-height-header) + var(--app-margin-top-header) + 0)
+}

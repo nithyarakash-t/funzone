@@ -1,0 +1,44 @@
+/*Miscellaneous Utility classes*/
+// Screen reader only
+.sr-only {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    border: 0;
+}
+
+.sr-only-focusable {
+    &:active,
+    &:focus {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        text-align: center;
+        background-color: #f4f4f4;
+        transform: translateX(-50%);
+        z-index: 1100;
+    }
+}
+
+// Stretched Link
+.-stretched-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: inline-block;
+    z-index: 1;
+    &:focus-visible::after {
+        outline: 0.0625rem solid #000;
+    }
+}

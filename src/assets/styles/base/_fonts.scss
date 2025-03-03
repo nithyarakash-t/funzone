@@ -1,0 +1,12 @@
+@layer fonts;
+
+@layer fonts {
+    @font-face {
+        font-family: "Dela Gothic One";
+        src: url('/fonts/DelaGothicOne-Regular.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: "Rampart one";
+        src: url('/fonts/RampartOne-Regular.ttf') format('truetype');
+    }
+}

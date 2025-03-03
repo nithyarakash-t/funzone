@@ -1,0 +1,22 @@
+.app-footer {
+    &__right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: auto;
+        @media (max-width: 300px) {
+            margin-left: 0;
+        }
+    }
+    &__inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        // justify-content: space-between;
+    }
+    &__wrap {
+        padding: 1rem 0 1rem;
+        border-top: 1px solid;
+    }
+}

@@ -1,0 +1,88 @@
+/* Layout classes */
+:root {
+  --content-padding: 4.75rem;
+  --content-maxwidth: 80rem;
+  --content-breakout-maxwidth: 96.875rem;
+  @media (max-width: 720px) {
+    --content-padding: 2rem;
+  }
+  @media (max-width: 450px) {
+    --content-padding: 1rem;
+  }
+}
+
+//1 - Layout 1 - Grid based - Start*/
+/*
+Modern and Minimalistic - 
+Inspired by the following articles: 
+- https://ryanmulligan.dev/blog/layout-breakouts/
+- https://smolcss.dev/#smol-breakout-grid
+- https://codepen.io/kevinpowell/pen/ExrZrrw
+*/
+.app {
+  &-fullwidth {
+    grid-column: full-width;
+  
+    display: grid;
+    grid-template-columns: inherit;
+  }
+  &-breakout {
+      grid-column: breakout;
+  }
+  &-grid {
+    --grid-padding-horizontal: var(--content-padding);
+    --grid-content-maxwidth: var(--content-maxwidth);
+    --grid-breakout-maxwidth: var(--content-breakout-maxwidth);
+    --grid-breakout-size: calc((var(--grid-breakout-maxwidth) - var(--grid-content-maxwidth)) / 2);
+  
+    display: grid;
+    grid-template-columns:
+      [full-width-start] minmax(var(--grid-padding-horizontal), 1fr)
+      [breakout-start] minmax(0, var(--grid-breakout-size))
+      [content-start] min(
+        100% - (var(--grid-padding-horizontal) * 2),
+        var(--grid-content-maxwidth)
+      )
+      [content-end]
+      minmax(0, var(--grid-breakout-size)) [breakout-end]
+      minmax(var(--grid-padding-horizontal), 1fr) [full-width-end];
+  }
+
+  &-fullwidth,
+  &-grid {
+    // while .app-fullwidth > .app-fullwidth is a little redundant as there is no use for it, I want this piece of code to remain common
+    > :not(.app-breakout, .app-fullwidth) {
+      grid-column: content;
+    }
+  }
+}
+
+//2 - Layout 2 - Container based - Start*/
+/*
+Traditional, robust and reliable.
+Easy to set up max width and centered content.
+Easy to use with Angular.
+*/
+.app {
+  &-container {
+    padding-left: var(--content-padding);
+    padding-right: var(--content-padding);
+    width: 100%;
+    max-width: var(--content-maxwidth);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &-wrap {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1;
+  }
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+}

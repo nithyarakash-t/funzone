@@ -1,0 +1,116 @@
+// @import "https://unpkg.com/open-props/easings.min.css";
+
+@mixin themeswitch-theme {
+  --themeswitch-icon-color: light-dark(
+    rgba(0, 0, 0, 0.8),
+    rgba(255, 255, 255, 0.8)
+  );
+  --themeswitch-icon-color-active: light-dark(
+    rgba(0, 0, 0, 1),
+    rgba(255, 255, 255, 1)
+  );
+}
+
+.app-themeswitch {
+  &__toggle {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    color: inherit;
+    .sun-and-moon {
+      height: 100%;
+      width: 100%;
+      pointer-events: none;
+      & {
+        > :is(.moon, .sun, .sun-beams) {
+          transform-origin: center;
+        }
+        > :is(.moon, .sun) {
+          fill: var(--themeswitch-icon-color);
+        }
+        > .sun-beams {
+          stroke: var(--themeswitch-icon-color);
+          stroke-width: 2px;
+        }
+      }
+      
+      @media (prefers-reduced-motion: no-preference) {
+        > .sun {
+          transition: transform 0.5s var(--ease-elastic-3);
+        }
+        > .sun-beams {
+          transition: transform 0.5s var(--ease-elastic-4), opacity 0.5s var(--ease-3);
+        }
+        > circle {
+          transition: transform 0.25s var(--ease-out-5);
+        }
+
+        @supports (cx: 1) {
+          >.moon > circle {
+            transition: cx 0.25s var(--ease-out-5);
+          }
+        }
+      }
+    }
+
+    &[data-theme="dark"] {
+      .sun-and-moon {
+        > .sun {
+          transform: scale(1.75);
+        }
+
+        > .sun-beams {
+          opacity: 0;
+        }
+
+        .moon > circle {
+          transform: translateX(-7px);
+        }
+      }
+
+      @supports (cx: 1) {
+        .sun-and-moon > .moon > circle {
+          cx: 17;
+          transform: translateX(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        svg.sun-and-moon {
+          > .sun {
+            transition-timing-function: var(--ease-3);
+            transition-duration: 0.25s;
+            transform: scale(1.75);
+          }
+        
+          > .sun-beams {
+            transition-duration: 0.15s;
+            transform: rotateZ(-25deg);
+          }
+        
+          > .moon > circle {
+            transition-duration: 0.5s;
+            transition-delay: 0.25s;
+          }
+        }
+      }
+    }
+
+    &:is(:hover, :focus-visible) {
+      .sun-and-moon {
+        > :is(.moon, .sun) {
+          fill: var(--themeswitch-icon-color-active);
+        }
+        .sun-beams {
+          stroke: var(--themeswitch-icon-color-active);
+        }
+      }
+    }
+  }
+  &__wrap {
+    line-height: 1;
+    @include themeswitch-theme();
+  }
+}

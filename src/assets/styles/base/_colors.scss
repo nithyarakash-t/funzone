@@ -1,0 +1,55 @@
+@mixin base-theme {
+  --color-base-white: #fff;
+  --color-base-black: #000;
+  --color-base-grey: #ccc;
+
+  --color-black-500: #333;
+  --color-grey-100: #fafafa;
+  --color-grey-200: #eee;
+  --color-grey-300: #ddd;
+  --color-grey-400: var(--color-base-grey);
+  --color-grey-700: #737373;
+  --color-grey-800: #505050;
+  --color-grey-900: #222;
+
+  //Note: Fallback values not used, be mindful when deleting colors above
+  --color-default: light-dark(var(--color-base-black), var(--color-base-white));
+  --color-contrast: light-dark(var(--color-base-white), var(--color-base-black));
+  --color-overlay: light-dark(rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.6));
+  
+  --app-color-background-primary: var(--color-contrast);
+  --app-color-background-contrast: var(--color-default);
+
+  --app-color-text-primary: var(--color-default);
+  --app-color-text-secondary: light-dark(var(--color-grey-700), var(--color-grey-200));
+  --app-color-border-primary: var(--color-default);
+  --app-color-border-secondary: light-dark(#ccc, #737373);
+  --app-color-border-tertiary: light-dark(#ccc, #eee);
+  --anchor-color-text-primary: light-dark(#000, #fff);
+  --anchor-color-text-primary-active:  light-dark(#0f73ee, #bb86fc); //light-dark(#000. #fff);
+  --anchor-color-text-secondary: light-dark(#999, #737373);
+  --anchor-color-text-secondary-active: light-dark(#0f73ee, #bb86fc);
+}
+
+:root {
+  @include base-theme();
+
+  // Ability to provide smooth scroll behavior on supported browsers only.
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+html {
+  color-scheme: light dark;
+  
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+  }
+  &[data-theme="dark"] {
+    color-scheme: only dark;
+  }
+  &[data-theme="light"] {
+    color-scheme: only light;
+  }
+}
