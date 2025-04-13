@@ -9,6 +9,9 @@
     cursor: pointer;
     font-family: "Caprasimo", cursive;
     padding: 1rem;
+    &:disabled {
+      filter: grayscale(1);
+    }
   }
   ol {
     display: flex;

@@ -35,7 +35,7 @@
     &.highlight-player {
       li.active {
         border-color: #f6e35a;
-        animation: pulse 2s infinite ease-in-out;
+        // animation: pulse 2s infinite ease-in-out;
 
         :is(.ttt-player__name, .ttt-player__symbol) {
           color: #f6e35a;
@@ -44,12 +44,13 @@
     }
   }
   &__container {
-    max-width: 45rem;
+    max-width: 46rem;
     margin: 3rem auto;
     padding: 2rem;
-    border-radius: 6px;
+    border-radius: 0.375rem;
     background: linear-gradient(#383624, #282617);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid #ccc;
     position: relative;
   }
 }

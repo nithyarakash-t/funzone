@@ -4,4 +4,9 @@ Mini games kit
 -- boardgame-io
 -- wordle like (refreshes everyday)
 -- title takedown
--- mewtru inspired pages
+
+-- mewtru
+-- neal.fun
+r/badUIbattles
+https://goulartnogueira.github.io/BadUI/
+https://github.com/philipl/pifs/blob/master/README.md --- https://www.mypiday.com/ 
