@@ -32,12 +32,12 @@ export function Player({
   }
 
   return (
-    <li className={isActive ? 'active' : undefined}>
+    <div className={'ttt-player__container ' + (isActive ? 'active' : null)}>
       <span className="ttt-player__wrap">
         {editablePlayerName}
         <span className="ttt-player__symbol">{symbol}</span>
       </span>
       <button onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
-    </li>
+    </div>
   );
 }

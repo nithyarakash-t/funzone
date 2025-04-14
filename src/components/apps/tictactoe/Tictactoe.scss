@@ -2,49 +2,22 @@
 
 .ttt-game {
   &__players {
-    button {
-      width: 3rem;
-      border: none;
-      background: none;
-      color: #c3ba78;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: color 0.2s;
-      padding: 0.5rem 0.25rem;
-      text-align: center;
-
-      &:hover {
-        color: #f8ca31;
-      }
-    }
-    & li {
-      display: flex;
-      align-items: center;
-      width: 50%;
-      border: 2px solid transparent;
+    & > li {
+      position: relative;
     }
     & {
       list-style: none;
       padding: 0;
       margin: 1rem 0;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       align-items: center;
       gap: 2rem;
     }
-    &.highlight-player {
-      li.active {
-        border-color: #f6e35a;
-        // animation: pulse 2s infinite ease-in-out;
-
-        :is(.ttt-player__name, .ttt-player__symbol) {
-          color: #f6e35a;
-        }
-      }
-    }
   }
   &__container {
-    max-width: 46rem;
+    width: min(100%, 38rem);
     margin: 3rem auto;
     padding: 2rem;
     border-radius: 0.375rem;
@@ -55,18 +28,15 @@
   }
 }
 
-@keyframes pulse {
+@keyframes pulse-text-size {
   0% {
-    border-color: #f6e35a;
-    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0.4);
+    transform: scale(1);
   }
   50% {
-    border-color: #f8c031;
-    box-shadow: 0 0 0 0.5rem rgba(248, 165, 49, 0);
+    transform: scale(1.05);
   }
   100% {
-    border-color: #f6e35a;
-    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0);
+    transform: scale(1);
   }
 }
 
@@ -110,16 +80,4 @@
 //   color: #23221f;
 //   font: inherit;
 //   margin-top: 1.5rem;
-// }
-
-// @keyframes pulse-text-size {
-//   0% {
-//     transform: scale(1);
-//   }
-//   50% {
-//     transform: scale(1.05);
-//   }
-//   100% {
-//     transform: scale(1);
-//   }
 // }

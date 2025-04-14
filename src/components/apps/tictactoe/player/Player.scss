@@ -41,6 +41,37 @@
       text-transform: uppercase;
     }
   }
+  &__container {
+    > button {
+      width: 3rem;
+      border: none;
+      background: none;
+      color: #c3ba78;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 0.5rem 0.25rem;
+      text-align: center;
+
+      &:hover {
+        color: #f8ca31;
+      }
+    }
+    & {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      border: 2px solid transparent;
+    }
+    &.active {
+      border-color: #f6e35a;
+      animation: pulse 2s infinite ease-in-out;
+
+      :is(.ttt-player__name, .ttt-player__symbol) {
+        color: #f6e35a;
+      }
+    }
+  }
 }
 
 @keyframes pulse-text {
@@ -55,3 +86,18 @@
     }
   }
   
+  
+@keyframes pulse {
+  0% {
+    border-color: #f6e35a;
+    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0.4);
+  }
+  50% {
+    border-color: #f8c031;
+    box-shadow: 0 0 0 0.5rem rgba(248, 165, 49, 0);
+  }
+  100% {
+    border-color: #f6e35a;
+    box-shadow: 0 0 0 0 rgba(246, 227, 90, 0);
+  }
+}
