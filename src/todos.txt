@@ -1,3 +1,10 @@
+----------------YTD-------------------
+1. gSap morphSVG is now free - use it on themeswitch
+
+Redux vs Jotai vs Zustand
+---------------------------------------
+---------------------------------------
+
 Mini games kit
 
 -- tic tac toe
@@ -10,3 +17,8 @@ Mini games kit
 r/badUIbattles
 https://goulartnogueira.github.io/BadUI/
 https://github.com/philipl/pifs/blob/master/README.md --- https://www.mypiday.com/ 
+
+-- https://wordflood.xyz/
+
+--------------------------------------
+Redux vs Jotai
