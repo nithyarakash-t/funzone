@@ -9,6 +9,8 @@ export const references:Reference[] = [
 
 
 /**
+ * throttle interval when word check is happening --- 
+ * 
  * english-words vs an-array-of-english-words
  * timer
  * game modes - to death, set targets

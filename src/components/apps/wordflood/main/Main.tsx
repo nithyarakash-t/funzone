@@ -100,7 +100,7 @@ export function Main() {
     }, [gamestate]); // Only re-run effect when gamestate changes
   
 
-
+    //reset and start game
     function startGame() {
         setGameState('running');
         setFoundWords([]);
@@ -109,13 +109,15 @@ export function Main() {
         setElapsedTime(0); 
 
     }
+    //end current game
     function endGame() {
         setGameState('stopped');
     }
+    // clear selected letter queue
     function clearLetterQueue() {
         setLetterQueue([]);
     }
-
+    // submit word for check
     function submitWord() {
         if(letterQueue.length < 1) return;
 
@@ -144,6 +146,7 @@ export function Main() {
             console.log('Not a word dumbass, try harder');
         }
     }
+    // toggle cell - select / de-select
     function handleCellClick(input:(string)) {
         // const [ROW_INDEX, CELL_INDEX] = input.split('-');
         // console.log(ROW_INDEX, CELL_INDEX);
@@ -159,11 +162,11 @@ export function Main() {
 
         setLetterQueue(newLetterQueue);
     }
-
-    //utils
+    // Is word valid ?
     function isValidEnglishWord(word: string): boolean {
         return WORD_SET.has(word.toLowerCase());
     }
+
      return(
         <div className='wf-app__main'>
             <div className="wf-app__timer">Time: {formatTime(elapsedTime)}</div>
