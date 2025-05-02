@@ -27,12 +27,18 @@ export function Main() {
     const [foundWords, setFoundWords] = useState<string[]>([]);
     const [score, setScore] = useState(0);
 
+    // const [mode, setMode] = useState<'Set' | 'Death'>('Set');
+    // const [difficulty, setDifficulty] = useState<'Easy' | 'Hard'>('Easy');
+
     useEffect(()=>{
         console.log(queue, 'queue update')
     }, [queue])
 
 
     function startGame() {
+
+    }
+    function endGame() {
 
     }
     function resetGame() {
@@ -125,6 +131,9 @@ export function Main() {
             </div>
             <div className='wf-app__controlgroup'>
                 <button type='button' className='wf-app__start' aria-label='start' onClick={startGame}>Start Game</button>
+                <button type='button' className='wf-app__end' aria-label='end' onClick={endGame}>End Game</button>
+            </div>
+            <div className='wf-app__controlgroup'>
                 <button type='button' className='wf-app__reset' aria-label='Reset' onClick={resetGame}>Restart Game</button>
             </div>
             <p className='wf-app__foundwords'>
