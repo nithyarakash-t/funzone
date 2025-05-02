@@ -5,6 +5,7 @@
       block-size: 3rem;
       inline-size: 3rem;
       line-height: 1;
+      text-transform: capitalize;
       &[aria-selected=true] {
         background: color-mix(in srgb, green, light-dark(transparent, turquoise) 80%);
       }

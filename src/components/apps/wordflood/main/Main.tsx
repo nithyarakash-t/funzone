@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import wordList from 'an-array-of-english-words';
 import './Main.scss';
-import { fillMatrixWithRandomLetters, fillMatrixWithVowelWeightedLetters, formatTime } from '../utils';
+import { fillMatrixWithRandomLetters, fillMatrixWithVowelWeightedLetters, fillSingleCellWithRandomLetter, fillSingleCellWithVowelWeightedLetter, formatTime } from '../utils';
 
 const INITIAL_MATRIX_STATE:(string | null)[][] = [
     [null, null, null, null, null, null],
@@ -22,7 +22,7 @@ const TEST_MATRIX_STATE:(string | null)[][] = [
 const ALLOWED_ROWS = 6, ALLOWED_COLS = 6;
 const WORD_SET = new Set(wordList);
 const MULTIPLIER = 10; //10 points per letter in word
-// const INTERVAL = 3000; // 5s interval during death mode - progressively decreses based on score till it reaches 1s
+const INTERVAL = 1500; // 5s interval during death mode - progressively decreses based on score till it reaches 1s
 
 export function Main() {
     const [elapsedTime, setElapsedTime] = useState<number>(0);
@@ -31,12 +31,13 @@ export function Main() {
     const [letterQueue, setLetterQueue] = useState<string[]>([]);
     const [foundWords, setFoundWords] = useState<string[]>([]);
     const [score, setScore] = useState(0);
-
     const [mode, setMode] = useState<'SetGame' | 'DeathGame'>('SetGame');
     const [difficulty, setDifficulty] = useState<'Easy' | 'Hard'>('Easy');
 
     //Decide on initial matrix based on mode
     useEffect(()=>{
+        let fillInterval: number | undefined;
+
         if(gamestate === 'running') {
             if(mode === 'SetGame') {
                 console.info('Starting Set mode - generating one time random matrix');
@@ -50,6 +51,29 @@ export function Main() {
             else {
                 console.info('Starting Death mode');
                 setMatrix(INITIAL_MATRIX_STATE);
+
+                fillInterval = window.setInterval(() => {
+                    setMatrix(prevMatrix => {
+                      // Check if there are any null cells left to fill
+                      const hasNullCells = prevMatrix.some(row => row.some(cell => cell === null));
+                      
+                      if (!hasNullCells) {
+                        // If no null cells left, clear the interval - board is full
+                        if (fillInterval) {
+                          clearInterval(fillInterval);
+                        }
+                        endGame(); //end game
+                        return prevMatrix;
+                      }
+                      
+                      // Fill a single cell based on difficulty
+                      if (difficulty === 'Easy') {
+                        return fillSingleCellWithVowelWeightedLetter(prevMatrix);
+                      } else {
+                        return fillSingleCellWithRandomLetter(prevMatrix);
+                      }
+                    });
+                }, INTERVAL); // 3 seconds interval
                 
             }
         }
@@ -61,10 +85,10 @@ export function Main() {
         let timerInterval: number | undefined;
         
         if (gamestate === 'running') {
-        // Start the timer, incrementing every second
-        timerInterval = window.setInterval(() => {
-            setElapsedTime(prevTime => prevTime + 1);
-        }, 1000);
+            // Start the timer, incrementing every second
+            timerInterval = window.setInterval(() => {
+                setElapsedTime(prevTime => prevTime + 1);
+            }, 1000);
         }
         
         // Cleanup function to clear interval when component unmounts or gamestate changes
@@ -79,14 +103,14 @@ export function Main() {
 
     function startGame() {
         setGameState('running');
-    }
-    function endGame() {
-        setGameState('stopped');
-        setElapsedTime(0); 
-        setMatrix(INITIAL_MATRIX_STATE);
         setFoundWords([]);
         setScore(0);
         clearLetterQueue();
+        setElapsedTime(0); 
+
+    }
+    function endGame() {
+        setGameState('stopped');
     }
     function clearLetterQueue() {
         setLetterQueue([]);
@@ -143,6 +167,7 @@ export function Main() {
      return(
         <div className='wf-app__main'>
             <div className="wf-app__timer">Time: {formatTime(elapsedTime)}</div>
+            <p>Game status - {gamestate}</p>
             <div className='wf-app__selectwrap'>
                 <select name='wf-app-difficulty' id='wf-app-difficulty' value={difficulty} 
                 onChange={(e)=>setDifficulty(e.currentTarget.value as ('Easy' | 'Hard'))}
@@ -185,8 +210,8 @@ export function Main() {
                 })}
             </p>
             <div className='wf-app__controlgroup'>
-                <button type='button' className='wf-app__clear' aria-label='clear selection' disabled={letterQueue.length === 0} onClick={clearLetterQueue}>Clear Queue</button>
-                <button type='button' className='wf-app__submit' aria-label='submit word' disabled={letterQueue.length === 0} onClick={submitWord}>Submit word</button>
+                <button type='button' className='wf-app__clear' aria-label='clear selection' disabled={gamestate !== 'running' || letterQueue.length === 0} onClick={clearLetterQueue}>Clear Queue</button>
+                <button type='button' className='wf-app__submit' aria-label='submit word' disabled={gamestate !== 'running' || letterQueue.length === 0} onClick={submitWord}>Submit word</button>
             </div>
             <div className='wf-app__controlgroup'>
                 <button type='button' className='wf-app__start' aria-label='start' disabled={gamestate === 'running'} onClick={startGame}>Start Game</button>
