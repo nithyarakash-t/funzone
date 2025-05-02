@@ -2,15 +2,16 @@ import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import './Wordflood.scss';
 import { References } from '../../layout/references/References';
 import { references } from './references';
+import { Main } from './main/Main';
 
 export function Wordflood() {
     return (
         <section className='app-grid wf-app__wrap'>
-            <h1 className='wf-app__title'>Contrast Checker</h1>
+            <h1 className='wf-app__title'>Word flood</h1>
             <Routes>
                 <Route path="/" element={
                     <>
-                        <p>Main</p>
+                        <Main/>
                         <div className='wf-app__refcont'>
                             <Link to={'./references'} aria-label="References for Css colors"
                                >References</Link>
