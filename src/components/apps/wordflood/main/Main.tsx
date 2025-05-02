@@ -20,26 +20,37 @@ const TEST_MATRIX_STATE:(string | null)[][] = [
 ]
 const WORD_SET = new Set(wordList);
 const MULTIPLIER = 10; //10 points per letter in word
+// const INTERVAL = 3000; // 5s interval during death mode - progressively decreses based on score till it reaches 1s
 
 export function Main() {
+    const [gamestate, setGameState] = useState<'running' | 'stopped'>('stopped');
     const [matrix, setMatrix] = useState(TEST_MATRIX_STATE);
     const [queue, setQueue] = useState<string[]>([]);
     const [foundWords, setFoundWords] = useState<string[]>([]);
     const [score, setScore] = useState(0);
 
-    // const [mode, setMode] = useState<'Set' | 'Death'>('Set');
+    const [mode] = useState<'Set' | 'Death'>('Set');
     // const [difficulty, setDifficulty] = useState<'Easy' | 'Hard'>('Easy');
 
+    //Decide on initial matrix based on mode
     useEffect(()=>{
-        console.log(queue, 'queue update')
-    }, [queue])
+        if(gamestate === 'running') {
+            if(mode === 'Set') {
+                console.info('Starting Set mode - generating one time random matrix');
+            }
+            else {
+                console.info('Starting Death mode');
+            }
+        }
+        
+    }, [mode, gamestate])
 
 
     function startGame() {
-
+        setGameState('running');
     }
     function endGame() {
-
+        setGameState('stopped');
     }
     function resetGame() {
         setMatrix(INITIAL_MATRIX_STATE);
