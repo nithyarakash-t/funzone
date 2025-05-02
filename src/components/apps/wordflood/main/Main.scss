@@ -2,9 +2,15 @@
   &__table {
     &-button {
       padding: 1rem;
+      block-size: 3rem;
+      inline-size: 3rem;
       line-height: 1;
       &[aria-selected=true] {
         background: color-mix(in srgb, green, light-dark(transparent, turquoise) 80%);
+      }
+      &[disabled] {
+        opacity: 1;
+        filter: none;
       }
     }
     &-cell {
@@ -40,6 +46,19 @@
       position: relative;
       display: flex;
       justify-content: center;
+
+      &[data-state='yettostart'] {
+        &::after {
+          content: none;
+        }
+      }
+      &[data-state='stopped'] {
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+        }
+      }
     }
   }
 }

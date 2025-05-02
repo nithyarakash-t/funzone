@@ -15,3 +15,10 @@ export const references:Reference[] = [
  * game difficulty - 1. progressive option 2. frequency 3. less vowels ?!, more z, y etc,. ?
  *                 --------- in easy mode vowels and consonants should have similar probabil;ity  
  */
+
+/**
+ * modes -
+ *    - one off
+ *    - keeps appearing
+ *     
+ */
