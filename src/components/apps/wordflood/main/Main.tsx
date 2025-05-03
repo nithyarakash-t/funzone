@@ -34,6 +34,7 @@ export function Main() {
     const [mode, setMode] = useState<'SetGame' | 'DeathGame'>('SetGame');
     const [difficulty, setDifficulty] = useState<'Easy' | 'Hard'>('Easy');
 
+    const [isValidating, setIsValidating] = useState<boolean>(false);
     const [filledCellCount, setFilledCellCount] = useState<number>(0);
     const totalCells = ALLOWED_ROWS * ALLOWED_COLS;
 
@@ -41,7 +42,7 @@ export function Main() {
     useEffect(() => {
         let fillInterval: number | undefined;
     
-        if (gamestate === 'running' && mode === 'DeathGame') {
+        if (gamestate === 'running' && !isValidating && mode === 'DeathGame') {
             console.info('Managing Death mode progression'); //Setmode is completely handled in startGame
         
             fillInterval = window.setInterval(() => {
@@ -70,7 +71,7 @@ export function Main() {
                 clearInterval(fillInterval);
             }
         };
-    }, [gamestate, mode, difficulty, filledCellCount, totalCells]);
+    }, [gamestate, mode, difficulty, filledCellCount, totalCells, isValidating]);
 
     // Timer effect - runs when game is in 'running' state
     useEffect(() => {
@@ -124,6 +125,7 @@ export function Main() {
     function submitWord() {
         if(letterQueue.length < 1) return;
 
+        setIsValidating(true);
         const WORD = letterQueue
                     .map(rowcell => {
                         const [row, col] = rowcell.split('-').map(Number);
@@ -149,6 +151,8 @@ export function Main() {
         else {
             console.log('Not a word dumbass, try harder');
         }
+
+        setIsValidating(false);
     }
     // toggle cell - select / de-select
     function handleCellClick(input:(string)) {
