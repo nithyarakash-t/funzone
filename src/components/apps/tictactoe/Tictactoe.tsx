@@ -9,8 +9,8 @@ import { WINNING_COMBINATIONS } from './winningCombinations';
 import './Tictactoe.scss';
 
 const PLAYERS: Players = {
-  X: 'Player 1',
-  O: 'Player 2'
+  X: 'Pl 1',
+  O: 'Pl 2'
 };
 
 const INITIAL_GAME_BOARD: GameBoardType = [
@@ -103,19 +103,20 @@ export function Tictactoe() {
   return (
     <div className='app-grid'>
       <div className='ttt-game__container' id="game-container">
-        <ol id="players" className="ttt-game__players highlight-player">
-          <Player
+        <ol id="players" className="ttt-game__players">
+          <li><Player
             initialName={PLAYERS.X}
             symbol="X"
             isActive={activePlayer === 'X'}
             onChangeName={handlePlayerNameChange}
-          />
-          <Player
+          /></li>
+          <li><Player
             initialName={PLAYERS.O}
             symbol="O"
             isActive={activePlayer === 'O'}
             onChangeName={handlePlayerNameChange}
           />
+          </li>
         </ol>
         {(winner || hasDraw) && (
           <GameOver winner={winner} onRestart={handleRestart} />

@@ -6,6 +6,7 @@ import { Footer } from './components/layout/footer/Footer'
 import { ThemeProvider } from './components/layout/themeSwitch/Themecontext'
 import { Home } from './components/layout/home/Home'
 import { Tictactoe } from './components/apps/tictactoe/Tictactoe'
+import { Wordflood } from './components/apps/wordflood/Wordflood'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
               <Routes>
                 <Route path='/' element={ <Home/> }></Route>
                 <Route path='/tictactoe' element={ <Tictactoe/> }></Route>
+                <Route path='/wordflood' element={ <Wordflood/> }></Route>
                 <Route path='/releasenotes' element={<ReleaseNotes/>}></Route>
                 <Route path='*' element={<Navigate to='/' />} />
               </Routes>
