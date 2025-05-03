@@ -34,82 +34,85 @@ export function Main() {
     const [mode, setMode] = useState<'SetGame' | 'DeathGame'>('SetGame');
     const [difficulty, setDifficulty] = useState<'Easy' | 'Hard'>('Easy');
 
-    //Decide on initial matrix based on mode
-    useEffect(()=>{
+    const [filledCellCount, setFilledCellCount] = useState<number>(0);
+    const totalCells = ALLOWED_ROWS * ALLOWED_COLS;
+
+    //Handles DeathMode progression
+    useEffect(() => {
         let fillInterval: number | undefined;
-
-        if(gamestate === 'running') {
-            if(mode === 'SetGame') {
-                console.info('Starting Set mode - generating one time random matrix');
-                if(difficulty === 'Easy') {
-                    setMatrix(fillMatrixWithVowelWeightedLetters(ALLOWED_ROWS, ALLOWED_COLS));
-                }
-                else {
-                    setMatrix(fillMatrixWithRandomLetters(ALLOWED_ROWS, ALLOWED_COLS));
-                }
-            }
-            else {
-                console.info('Starting Death mode');
-                setMatrix(INITIAL_MATRIX_STATE);
-
-                fillInterval = window.setInterval(() => {
-                    setMatrix(prevMatrix => {
-                      // Check if there are any null cells left to fill
-                      const hasNullCells = prevMatrix.some(row => row.some(cell => cell === null));
-                      
-                      if (!hasNullCells) {
-                        // If no null cells left, clear the interval - board is full
-                        if (fillInterval) {
-                          clearInterval(fillInterval);
-                        }
-                        endGame(); //end game
-                        return prevMatrix;
-                      }
-                      
-                      // Fill a single cell based on difficulty
-                      if (difficulty === 'Easy') {
-                        return fillSingleCellWithVowelWeightedLetter(prevMatrix);
-                      } else {
-                        return fillSingleCellWithRandomLetter(prevMatrix);
-                      }
-                    });
-                }, INTERVAL); // 3 seconds interval
-                
-            }
-        }
+    
+        if (gamestate === 'running' && mode === 'DeathGame') {
+            console.info('Managing Death mode progression'); //Setmode is completely handled in startGame
         
-    }, [gamestate, mode, difficulty])
+            fillInterval = window.setInterval(() => {
+                // game ends when all cells are filled
+                if (filledCellCount >= totalCells) {
+                    clearInterval(fillInterval);
+                    endGame();
+                    return;
+                }
+                
+                setMatrix(prevMatrix => {
+                    const newMatrix = difficulty === 'Easy' 
+                        ? fillSingleCellWithVowelWeightedLetter(prevMatrix)
+                        : fillSingleCellWithRandomLetter(prevMatrix);
+                    
+                    return newMatrix;
+                });
+                
+                setFilledCellCount(prev => prev + 1);
+                
+            }, INTERVAL);
+        }
+    
+        return () => {
+            if (fillInterval) {
+                clearInterval(fillInterval);
+            }
+        };
+    }, [gamestate, mode, difficulty, filledCellCount, totalCells]);
 
     // Timer effect - runs when game is in 'running' state
     useEffect(() => {
         let timerInterval: number | undefined;
         
         if (gamestate === 'running') {
-            // Start the timer, incrementing every second
             timerInterval = window.setInterval(() => {
                 setElapsedTime(prevTime => prevTime + 1);
             }, 1000);
         }
         
-        // Cleanup function to clear interval when component unmounts or gamestate changes
         return () => {
             if (timerInterval) {
                 clearInterval(timerInterval);
             }
         };
-    }, [gamestate]); // Only re-run effect when gamestate changes
+    }, [gamestate]);
   
 
     //reset and start game
     function startGame() {
+       // Set initial game state
         setGameState('running');
         setFoundWords([]);
         setScore(0);
         clearLetterQueue();
-        setElapsedTime(0); 
-
+        setElapsedTime(0);
+        
+        // Initialize matrix and cell count based on game mode
+        if (mode === 'SetGame') {
+            if (difficulty === 'Easy') {
+                setMatrix(fillMatrixWithVowelWeightedLetters(ALLOWED_ROWS, ALLOWED_COLS));
+            } else {
+                setMatrix(fillMatrixWithRandomLetters(ALLOWED_ROWS, ALLOWED_COLS));
+            }
+            setFilledCellCount(totalCells);
+        } else {
+            setMatrix(INITIAL_MATRIX_STATE);
+            setFilledCellCount(0);
+        }
     }
-    //end current game
+    //end current game - user is allowed to view the last game's data so no reset
     function endGame() {
         setGameState('stopped');
     }
@@ -128,7 +131,7 @@ export function Main() {
                     })
                     .join('');
         const FLAG = isValidEnglishWord(WORD);
-        console.log(FLAG);
+        console.log("Is the word valid - ", FLAG);
 
         if(FLAG) {
             const NEW_MATRIX = structuredClone(matrix);
@@ -137,6 +140,7 @@ export function Main() {
                 NEW_MATRIX[row][col] = null;
             })
 
+            setFilledCellCount(prev => prev - letterQueue.length);
             setFoundWords([...foundWords, WORD]);
             setScore((prev)=>prev + (WORD.length * MULTIPLIER));
             setMatrix(NEW_MATRIX);
@@ -171,6 +175,9 @@ export function Main() {
         <div className='wf-app__main'>
             <div className="wf-app__timer">Time: {formatTime(elapsedTime)}</div>
             <p>Game status - {gamestate}</p>
+            {
+                mode==='DeathGame' && <p className='wf-app__progress' style={{'--_progress': `${(filledCellCount / totalCells) * 100}%`} as React.CSSProperties}>Flood Progress - {filledCellCount}/{totalCells}</p>
+            }
             <div className='wf-app__selectwrap'>
                 <select name='wf-app-difficulty' id='wf-app-difficulty' value={difficulty} 
                 onChange={(e)=>setDifficulty(e.currentTarget.value as ('Easy' | 'Hard'))}
@@ -220,11 +227,15 @@ export function Main() {
                 <button type='button' className='wf-app__start' aria-label='start' disabled={gamestate === 'running'} onClick={startGame}>Start Game</button>
                 <button type='button' className='wf-app__end' aria-label='end' disabled={gamestate !== 'running'} onClick={endGame}>End Game</button>
             </div>
-            <p className='wf-app__foundwords'>
-                {foundWords.map((item,ind)=>{
-                    return <Fragment key={ind}>{item}, </Fragment>
-                })}
-            </p>
+            {
+                foundWords.length > 0 
+                &&
+                <p className='wf-app__foundwords'>
+                    {foundWords.map((item,ind)=>{
+                        return <Fragment key={ind}>{item}, </Fragment>
+                    })}
+                </p>
+            }
             <p className='wf-app__score'>SCORE - {score}</p>
         </div>
     )
