@@ -19,6 +19,8 @@ https://goulartnogueira.github.io/BadUI/
 https://github.com/philipl/pifs/blob/master/README.md --- https://www.mypiday.com/ 
 
 -- https://wordflood.xyz/
+-- https://x.com/zzzzshawn/status/2101623820205593047
+-- https://x.com/dhruvmakes/status/2099630018208952617
 
 --------------------------------------
 Redux vs Jotai
